@@ -2,7 +2,7 @@
 
 DivMMC (Aurora clone) & DivMMC + Z-Controller with Dual ROM for PentoGraf computer.
 
-> [English](README.md) | [Русский](README.ru.md)
+> [English](README.en.md) | [Русский](README.md)
 
 ---
 
