@@ -41,7 +41,7 @@ DivMMC (Aurora clone) \& DivMMC + Z-Controller with Dual ROM for PentoGraf compu
   1. **AS6C4008** (512 КБ, корпус DIP-32)
   2. **IS61C1024** (128 КБ, корпус DIP-32)
   3. **K6X4008** (512 КБ, корпус SOP-32)
-* * **Универсальность:** Идеальный выбор для разработчиков и энтузиастов, которым нужна максимальная совместимость с разным софтом.
+* **Универсальность:** Идеальный выбор для разработчиков и энтузиастов, которым нужна максимальная совместимость с разным софтом.
   
 [iBOM](Schematics/DivMMC_2ROM_discreet.html) [Схема](Schematics/DivMMC_2ROM_discreet.pdf) [Gerber](Gerber/DivMMC_2ROM_discreet_Gerber.zip)
   
