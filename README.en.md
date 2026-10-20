@@ -1,56 +1,63 @@
-# Leningrad2-DivMMC
+# PentoGraf-DivMMC-x2
 
-## DivMMC controller for ZX Spectrum computers.
+DivMMC (Aurora clone) & DivMMC + Z-Controller with Dual ROM for PentoGraf computer.
 
-> [English](README.en.md) | [Русский](README.md)
-
-The DivMMC interface for the legendary "Leningrad-2" clone allows the use of modern SD cards as storage media. It runs under the ESXDOS operating system, providing instant loading of games and software (.TAP, .TRD, .SCL, .Z80, .SNA) along with full support for long filenames. 
-
-The project is based on a proven circuit design by **AlexEkb** and is fully implemented using widely available, standard discrete logic components (74-series TTL chips).
-
-***
-
-## Historical Context
-
-While the classic Beta Disk Interface (BDI/TR-DOS) was the gold standard of the 1990s, DivMMC is the definitive standard today for everyday retro-computing. 
-
-This specific controller layout is tailored for seamless, plug-and-play connection to my custom motherboard revisions:
-*   [**Leningrad-2-48k**](https://github.com/Alex-2-Graf/LENINGRAD-2-48k)
-*   [**Leningrad-2-128k-SRAM**](https://github.com/Alex-2-Graf/Leningrad-2-128k-SRAM)
-
-On these motherboards, the expansion bus is already fully prepared. However, this DivMMC interface can also be connected to any other standard or third-party "Leningrad-2" board with minimal wiring adjustments.
-
-***
-
-## Technical Features
-
-*   **Storage Media:** Support for up to two SD cards (onboard MicroSD slot + extension header for a secondary card module).
-*   **Logic Circuitry:** Built entirely on discrete logic gates **without** CPLD or FPGA chips. This makes the board incredibly easy to assemble, debug, and maintain using basic tools.
-*   **Onboard Controls:** Dedicated **NMI** button (to trigger the ESXDOS file navigator overlay menu) and a hardware **RESET** button.
-*   **OS Compatibility:** Fully compatible with ESXDOS (version 0.8.9 and newer) for running `.TAP`, `.TRD`, `.SCL`, and `.Z80` files.
-
-### Hardware Project Files
-*   [Interactive BOM (iBOM)](Schematics/DivMMC\_L2.html)
-*   [Schematics](Schematics/DivMMC\_L2.pdf)
-*   [Gerber Files](Gerber/DivMMC\_L2\_Gerber.zip)
+> [English](README.md) | [Русский](README.ru.md)
 
 ---
 
-## Connection & Integration
+## 📋 Version Description
 
-The controller plugs into the standard expansion system bus. All essential control lines (`MREQ`, `IORQ`, `M1`, `RD`, `WR`) alongside the standard data and address buses are fully utilized according to the core DivMMC specification.
+### 🛠 Version 1: DivMMC "Aurora Edition" (Classic)
+A complete hardware clone of the classic **DivMMC by Aurora**, adapted for the PentoGraf system bus slot.
+* **Core:** Original DivMMC logic.
+* **Interface:** SD card slot.
+* **Compatibility:** Full out-of-the-box compatibility with standard software and **esxDOS** operating system.
+* **Differences from the original:** Only the form-factor and edge connector pinout were modified to fit the PentoGraf expansion slot.
 
-⚠️ **Important Note:** The interface strictly requires a working, stable CPU **`M1`** signal. On my custom Leningrad-2 motherboard projects, this signal is already pre-routed to the expansion slot by default. If you are using a stock computer board, verify that the `M1` line is correctly connected.
+[iBOM](Schematics/DivMMC_PentoGraf.html) | [Schematic](Schematics/DivMMC_PentoGraf.pdf) | [Gerber](Gerber/DivMMC_PentoGraf_Gerber.zip)
+
+### 🚀 Version 2: Dual ROM & Z-Controller (Advanced)
+An advanced modification based on the [DivMMC2ROM by Electrophysic](https://github.com) project, adapted for the PentoGraf system bus slot.
+* **Dual ROM Architecture:** The board features two ROM chips. One ROM stores the standard firmware (esxDOS), while the second ROM acts as a hardware address decoder.
+* **Z-Controller Support:** Along with the standard DivMMC mode, the board features integrated hardware logic for the **Z-Controller** (an SD card interface highly popular among classic post-Soviet ZX Spectrum clones like Pentagon).
+* **Simultaneous Operation:** Both DivMMC and Z-Controller interfaces work in parallel and simultaneously. No manual toggling or switches are required.
+* **Universal SRAM Footprint:** The PCB layout features a combined DIP/SOP footprint, allowing you to use **three different types of static RAM** seamlessly without any jumpers (auto-detected):
+  1. **AS6C4008** (512 KB, DIP-32 package)
+  2. **IS61C1024** (128 KB, DIP-32 package)
+  3. **K6X4008** (512 KB, SOP-32 package)
+* **Versatility:** The perfect choice for developers and enthusiasts seeking maximum compatibility with various modern and legacy software.
+
+[iBOM](Schematics/DivMMC_2ROM_discreet.html) | [Schematic](Schematics/DivMMC_2ROM_discreet.pdf) | [Gerber](Gerber/DivMMC_2ROM_discreet_Gerber.zip)
 
 ---
 
-## Software & ROM Firmware
+## 🛠 Technical Details
 
-To run this controller, you must flash an EPROM chip with the ESXDOS system firmware.
+* **System Slot:** Custom pitch and pinout designed specifically for the **PentoGraf** expansion slot.
+* **Power Supply:** +5V supplied from the system bus.
+* **Supported OS/Software:** esxDOS (for both DivMMC modes), Fatall / Wild Commander (WOS) (for Z-Controller mode).
 
-*   ⚠️ **Important:** This specific hardware layout uses a **modified firmware version**, which has been adapted to match AlexEkb's hardware architecture and the specific bus timings of the "Leningrad-2". The required ready-to-flash binary can be found inside the [/Firmware](Firmware/ROM.bin) folder of this repository.
-*   **Official Website:** You can visit the official esxDOS project page at [esxdos.org](http://esxdos.org) to explore the system command list, features, and the required root directory structure for the SD card.
+---
 
-### SD Card Preparation
-1. Format your SD card using the **FAT32** file system.
-2. Unpack the system files [archive](Firmware/esxdos\_disk.zip) (found in the firmware folder) directly into the root directory of the SD card.
+## 🚀 Quick Start
+
+1. **Manufacturing:** Go to the desired version folder, download the Gerber archive, and order the boards from any PCB manufacturer (JLCPCB, PCBWay, etc.).
+2. **Assembly:** Solder components according to the interactive BOM and placement sheets. No jumper configuration is needed for RAM type selection.
+3. **Flashing Firmware:**
+   * The **DIV ROM** image is identical for both hardware versions. Get the firmware binary [here](Firmware/ROM.bin)
+   * For dual SD card support (Dual ROM mode), flash this image into the **ADR ROM**: [Download ROM](Firmware/AdrDiv.bin)
+   * For the DivMMC + Z-Controller mode, flash this image into the **ADR ROM**: [Download ROM](Firmware/AdrDivZ2card.bin)
+4. **SD Card Preparation:**
+   * Format your SD card to **FAT32**.
+   * For DivMMC functionality: Copy the official **esxDOS** system directories (`/SYS` and `/BIN`) directly to the root of the card.
+5. **First Boot:** Insert the controller into the PentoGraf expansion slot while the computer is powered off. Insert the prepared SD card and power on the system.
+
+---
+
+## 📜 License and Acknowledgements
+
+* This project is distributed under the open-source **MIT License**.
+* Thanks to **AlexEkb** for the original and reliable discrete-logic DivMMC schematic design.
+* Special thanks to **Electrophysic** for the [DivMMC2ROM](https://github.com) project, which served as the hardware core for Version 2 of this controller.
+
